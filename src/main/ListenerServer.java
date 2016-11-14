@@ -21,7 +21,6 @@ public class ListenerServer implements Runnable{
 			outputStream.write(("ok").getBytes());
 			
 			System.out.println(inputStream.read());
-			System.out.println(inputStream.read());
 			
 			outputStream.close();
 			inputStream.close();
