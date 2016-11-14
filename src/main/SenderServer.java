@@ -1,6 +1,6 @@
 package main;
 
-public class ServerSender implements Runnable{
+public class SenderServer implements Runnable{
 
 	@Override
 	public void run() {
