@@ -2,14 +2,15 @@ package main;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class SenderClient implements Runnable{
 
-	private ObjectOutputStream objectOutputStream;
+	private PrintWriter objectOutputStream;
 	private Client client;
 	
-	public SenderClient(Client client, ObjectOutputStream outputStream) {
+	public SenderClient(Client client, PrintWriter outputStream) {
 		super();
 		this.client=client;
 		this.objectOutputStream=outputStream;
@@ -18,24 +19,14 @@ public class SenderClient implements Runnable{
 	@Override
 	public void run() {
 		
-		try {
-			this.objectOutputStream.writeObject(("test").getBytes());
-			this.objectOutputStream.flush();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		this.objectOutputStream.println("test");
+		this.objectOutputStream.flush();
 		
 		Scanner sc = new Scanner(System.in);
 		String msg = sc.nextLine();
 		
-		try {
-			this.objectOutputStream.writeObject(msg.getBytes());
-			this.objectOutputStream.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.objectOutputStream.println(msg);
+		this.objectOutputStream.flush();
 		
 	}
 

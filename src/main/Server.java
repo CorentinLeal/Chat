@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Server implements Runnable {
 
-	private static final int PORT=8080;
+	private static final int PORT=5050;
 	private ServerSocket socket;
 	private boolean isStopped = false;
 	private Thread currentThread;
