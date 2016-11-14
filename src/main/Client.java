@@ -31,15 +31,17 @@ public class Client implements Runnable{
 	public void run() {
 
 		
-		Thread emission = new Thread(new SenderClient(this.outputStream));
+		Thread emission = new Thread(new SenderClient(this, this.outputStream));
 		emission.start();
 		Thread reception = new Thread(new ListenerClient(this.inputStream));
 		reception.start();
+		System.out.println("Client Started");
 		
 	}
 	
 	public static void main(String[] args) {
 		Client client = new Client("toto");
+		System.out.println("Client created");
 		client.run();
 	}
 	
