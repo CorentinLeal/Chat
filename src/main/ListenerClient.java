@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 public class ListenerClient implements Runnable{
 
 	public BufferedReader objectInputStream;
+	private String message = null;
 	
 	public ListenerClient(BufferedReader inputStream) {
 		super();
@@ -15,11 +16,16 @@ public class ListenerClient implements Runnable{
 	
 	@Override
 	public void run() {
-		try {
-			System.out.println(this.objectInputStream.readLine());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		while(true){
+	        try {
+	        	
+			message = objectInputStream.readLine();
+			System.out.println("Le serveur vous dit :" +message);
+			
+		    } catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 		}
 		
 	}

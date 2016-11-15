@@ -1,31 +1,37 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+
 
 public class ListenerServer implements Runnable{
 
-	private Socket clientSocket;
+	
+	private BufferedReader in;
+	private String message,login;
 
-	public ListenerServer(Socket clientSocket) {
-		this.clientSocket=clientSocket;
+	public ListenerServer(BufferedReader  in, String login) {
+		this.in=in; 
+		this.login = login;
 	}
 	
 	@Override
 	public void run() {
-		try {
-			InputStream inputStream = clientSocket.getInputStream();
-			OutputStream outputStream = clientSocket.getOutputStream();
-			outputStream.write(("ok").getBytes());
+		while(true){
+	        try {
+	        	
+			message = in.readLine();
+			System.out.println(login+" : "+message);
 			
-			System.out.println(inputStream.read());
-			
-			outputStream.close();
-			inputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		    } catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 		}
 	}
 

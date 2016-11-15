@@ -9,6 +9,8 @@ public class SenderClient implements Runnable{
 
 	private PrintWriter objectOutputStream;
 	private Client client;
+	private String login, message;
+	private Scanner sc = null;
 	
 	public SenderClient(Client client, PrintWriter outputStream) {
 		super();
@@ -19,15 +21,13 @@ public class SenderClient implements Runnable{
 	@Override
 	public void run() {
 		
-		this.objectOutputStream.println("test");
-		this.objectOutputStream.flush();
-		
-		Scanner sc = new Scanner(System.in);
-		String msg = sc.nextLine();
-		
-		this.objectOutputStream.println(msg);
-		this.objectOutputStream.flush();
-		
+		  sc = new Scanner(System.in);
+		  
+		  while(true){
+			    System.out.println("Votre message :");
+				message = sc.nextLine();
+				objectOutputStream.println(message);
+				objectOutputStream.flush();
+			  }
 	}
-
 }

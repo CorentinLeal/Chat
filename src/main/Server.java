@@ -1,6 +1,9 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -10,6 +13,10 @@ public class Server implements Runnable {
 	private ServerSocket socket;
 	private boolean isStopped = false;
 	private Thread currentThread;
+	private PrintWriter out = null;
+	private BufferedReader in = null;
+	private Thread t1,t2;
+	private String login;
 	
 	public Server() {
 		super();
@@ -17,6 +24,7 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
+	
 		synchronized (this) {
 			this.currentThread=Thread.currentThread();
 		}
@@ -33,7 +41,32 @@ public class Server implements Runnable {
 				}
 				throw new RuntimeException("Error accepting client connection", e);
 			}
-			new Thread(new ListenerServer(clientSocket)).start();
+			try {
+				in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			try {
+				out = new PrintWriter(clientSocket.getOutputStream());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			out.println("Entrez votre login :");
+			out.flush();
+			
+			try {
+				login = in.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			t1 = new Thread(new ListenerServer(in,login));
+			t1.start();
+			t2 = new Thread(new SenderServer(out));
+			t2.start();
 		}
 		System.out.println("Server Stopped.");
 	}
