@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server implements Runnable {
 
@@ -17,6 +18,8 @@ public class Server implements Runnable {
 	private BufferedReader in = null;
 	private Thread t1,t2;
 	private String login;
+	private ArrayList<PrintWriter> outs = new ArrayList<PrintWriter>();
+
 	
 	public Server() {
 		super();
@@ -49,6 +52,7 @@ public class Server implements Runnable {
 			}
 			try {
 				out = new PrintWriter(clientSocket.getOutputStream());
+				outs.add(out);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -63,7 +67,7 @@ public class Server implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			t1 = new Thread(new ListenerServer(in,login));
+			t1 = new Thread(new ListenerServer(in,login,outs));
 			t1.start();
 			t2 = new Thread(new SenderServer(out));
 			t2.start();

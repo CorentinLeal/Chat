@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.Date;
 
 public class ListenerClient implements Runnable{
 
@@ -20,7 +21,8 @@ public class ListenerClient implements Runnable{
 	        try {
 	        	
 			message = objectInputStream.readLine();
-			System.out.println("Le serveur vous dit :" +message);
+			Date date = new Date();
+			System.out.println(date.toString() + " - " +message);
 			
 		    } catch (IOException e) {
 				
